@@ -19,7 +19,7 @@ export interface GameScene {
 
 export const useGameStore = defineStore('game', () => {
   // Состояние
-  const apiKey = ref('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')
+  const apiKey = ref('sk-aitunnel-PSlhtaVsi7TaBSvokHmiCH6MfGXcrjX1')
   const currentScene = ref<GameScene | null>(null)
   const history = ref<GameScene[]>([])
   const isLoading = ref(false)
@@ -95,9 +95,9 @@ export const useGameStore = defineStore('game', () => {
       messages.push({ role: 'user', content: prompt })
       
       const response = await axios.post(
-        'https://openrouter.ai/api/v1/chat/completions',
+        'https://api.aitunnel.ru/v1/chat/completions',
         {
-          model: 'meta-llama/llama-3.3-70b-instruct:free',
+          model: 'gemini-2.0-flash-lite-001',
           messages: messages,
           temperature: 0.5,
           max_tokens: 1500
