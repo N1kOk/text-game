@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "vue-tsc -b && vite build && node -e \"require('fs').copyFileSync('public/.nojekyll', 'dist/.nojekyll')\"",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.0.12",
+    "@types/node": "22.13.10",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",
     "autoprefixer": "10.4.21",

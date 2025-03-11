@@ -5,4 +5,5 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   assetsInclude: ['**/*.txt'], // Включаем текстовые файлы как ассеты
+  base: './', // Базовый путь для GitHub Pages
 })
