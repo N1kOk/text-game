@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import axios from 'axios'
 import systemPrompt from '../prompts/system-prompt.txt?raw'
 import userChoicePromptTemplate from '../prompts/user-choice-prompt.txt?raw'
+import initialPromptText from '../prompts/initial-prompt.txt?raw'
 
 export interface GameChoice {
   id: string
@@ -34,7 +35,7 @@ export const useGameStore = defineStore('game', () => {
   function startGame(title: string, initialPrompt: string) {
     gameTitle.value = title
     gameStarted.value = true
-    generateScene(initialPrompt)
+    generateScene("Начать игру")
   }
   
   async function generateScene(prompt: string) {
@@ -54,6 +55,10 @@ export const useGameStore = defineStore('game', () => {
         { 
           role: 'system', 
           content: systemPrompt
+        },
+        {
+          role: 'user',
+          content: initialPromptText
         }
       ]
       
@@ -86,7 +91,7 @@ export const useGameStore = defineStore('game', () => {
         }
       }
       
-      // Добавляем текущий запрос
+      // Добавляем текущий запрос (всегда)
       messages.push({ role: 'user', content: prompt })
       
       const response = await axios.post(
@@ -230,6 +235,7 @@ export const useGameStore = defineStore('game', () => {
       .replace(/\s{2,}/g, ' ') // Заменяем множественные пробелы на один
       // Добавляем пробелы после знаков препинания, если их нет
       .replace(/([.,;:!?])([^\s\d\n"'»)])/g, '$1 $2') // Добавляем пробел после знаков препинания, исключая цифры, переносы строк и закрывающие кавычки/скобки
+      .replace(/uddenly/gi, 'внезапно') // Заменяем английское слово "suddenly" на русское "внезапно"
       .trim(); // Убираем пробелы в начале и конце
   }
   

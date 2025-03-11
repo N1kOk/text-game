@@ -1,34 +1,24 @@
 <script setup lang="ts">
 import { useGameStore } from './stores/gameStore'
-import GameSetup from './components/GameSetup.vue'
 import GameScene from './components/GameScene.vue'
-import GameInfo from './components/GameInfo.vue'
+import { onMounted } from 'vue'
 
 const gameStore = useGameStore()
+
+// Автоматически начать игру при загрузке приложения
+onMounted(() => {
+  const gameTitle = 'Волшебное Приключение'
+  gameStore.startGame(gameTitle, '')
+})
 </script>
 
 <template>
   <div class="app">
-    <header class="app-header">
-      <h1 class="text-2xl font-bold">{{ gameStore.gameTitle }}</h1>
-    </header>
-    
     <main class="app-content">
-      <template v-if="!gameStore.gameStarted">
-        <GameSetup />
-        <GameInfo class="mt-8" />
-      </template>
-      
-      <template v-else>
+      <div class="content-container">
         <GameScene />
-      </template>
+      </div>
     </main>
-    
-    <footer class="app-footer">
-      <p class="text-sm text-gray-500">
-        Создано с любовью в качестве подарка на день рождения
-      </p>
-    </footer>
   </div>
 </template>
 
@@ -48,22 +38,22 @@ body {
   min-height: 100vh;
 }
 
-.app-header {
-  background-color: #4a5568;
-  color: white;
-  padding: 1rem;
-  text-align: center;
-}
-
 .app-content {
   flex: 1;
   padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.app-footer {
-  background-color: #f1f1f1;
-  padding: 1rem;
-  text-align: center;
-  margin-top: auto;
+.content-container {
+  max-width: 800px;
+  width: 100%;
+}
+
+@media (max-width: 850px) {
+  .content-container {
+    max-width: 100%;
+  }
 }
 </style>
