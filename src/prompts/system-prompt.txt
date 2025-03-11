@@ -31,4 +31,4 @@ CRITICAL: Options must be DIRECT ACTIONS only, without explanations or justifica
 IMPORTANT: The 3 options should follow these rules:
 1. The 1st option should bring the hero closer to the goal (finding the family and getting to the restaurant)
 2. The 2nd option should take the hero away from the goal
-3. The 3rd option should lead to funny or absurd situations, but should not be dangerous
+3. The 3rd option should lead to funny situations

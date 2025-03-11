@@ -113,7 +113,7 @@ function speakText() {
     
     <footer class="game-footer">
       <div class="footer-decoration"></div>
-      <p class="footer-text">Подарок любимому отцу</p>
+      <p class="footer-text">Специально для отца</p>
       <div class="footer-decoration"></div>
     </footer>
   </div>
