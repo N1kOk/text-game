@@ -33,7 +33,7 @@ function generateInitialPrompt() {
 
 function startGame() {
   if (gameTitle.value.trim() && initialPrompt.value.trim()) {
-    gameStore.startGame(gameTitle.value, initialPrompt.value)
+    gameStore.startGame(gameTitle.value)
   }
 }
 
