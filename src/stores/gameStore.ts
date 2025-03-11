@@ -99,7 +99,7 @@ export const useGameStore = defineStore('game', () => {
         {
           model: 'gemini-2.0-flash-lite-001',
           messages: messages,
-          temperature: 0.5,
+          temperature: 1,
           max_tokens: 1500
         },
         {
@@ -148,7 +148,7 @@ export const useGameStore = defineStore('game', () => {
         // Если вариантов меньше 3, добавляем стандартные
         if (choices.length < 3) {
           const defaultChoices = [
-            { id: '1', text: 'Продолжить поиски семьи' },
+            { id: '1', text: 'Продолжить' },
             { id: '2', text: 'Отвлечься на что-то другое' },
             { id: '3', text: 'Сделать что-то необычное' }
           ]
