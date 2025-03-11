@@ -3,7 +3,6 @@ import { ref, computed } from 'vue'
 import axios from 'axios'
 import systemPrompt from '../prompts/system-prompt.txt?raw'
 import userChoicePromptTemplate from '../prompts/user-choice-prompt.txt?raw'
-import russianExamples from '../prompts/examples.txt?raw'
 
 export interface GameChoice {
   id: string
@@ -55,10 +54,6 @@ export const useGameStore = defineStore('game', () => {
         { 
           role: 'system', 
           content: systemPrompt
-        },
-        {
-          role: 'assistant',
-          content: russianExamples
         }
       ]
       
@@ -99,8 +94,8 @@ export const useGameStore = defineStore('game', () => {
         {
           model: 'meta-llama/llama-3.3-70b-instruct:free',
           messages: messages,
-          temperature: 0.8,
-          max_tokens: 1000
+          temperature: 0.5,
+          max_tokens: 1500
         },
         {
           headers: {
@@ -263,7 +258,7 @@ export const useGameStore = defineStore('game', () => {
   }
   
   // Функция для обрезки длинных вариантов ответов
-  function truncateOption(text: string, maxLength: number = 50): string {
+  function truncateOption(text: string, maxLength: number = 100): string {
     // Сначала очищаем текст от лишних объяснений
     const cleaned = cleanActionOption(text);
     
