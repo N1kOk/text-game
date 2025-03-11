@@ -99,7 +99,7 @@ export const useGameStore = defineStore('game', () => {
         {
           model: 'gemini-2.0-flash-lite-001',
           messages: messages,
-          temperature: 1,
+          temperature: 0.75,
           max_tokens: 1500
         },
         {
@@ -175,7 +175,7 @@ export const useGameStore = defineStore('game', () => {
           id: Date.now().toString(),
           text: sceneText,
           choices: [
-            { id: '1', text: 'Продолжить поиски семьи' },
+            { id: '1', text: 'Продолжить' },
             { id: '2', text: 'Отвлечься на что-то другое' },
             { id: '3', text: 'Сделать что-то необычное' }
           ],
