@@ -239,41 +239,14 @@ export const useGameStore = defineStore('game', () => {
       .trim(); // Убираем пробелы в начале и конце
   }
   
-  // Функция для очистки вариантов действий от лишних объяснений
-  function cleanActionOption(text: string): string {
-    // Удаляем всё после запятой, тире, двоеточия или слов "чтобы", "потому что", "так как" и т.д.
-    let cleaned = text
-      .replace(/,.*$/, '') // Удаляем всё после запятой
-      .replace(/ - .*$/, '') // Удаляем всё после тире с пробелами
-      .replace(/-.*$/, '') // Удаляем всё после тире без пробелов
-      .replace(/:.*$/, '') // Удаляем всё после двоеточия
-      .replace(/ чтобы.*$/i, '') // Удаляем "чтобы" и всё после него
-      .replace(/ потому что.*$/i, '') // Удаляем "потому что" и всё после него
-      .replace(/ так как.*$/i, '') // Удаляем "так как" и всё после него
-      .replace(/ для того.*$/i, '') // Удаляем "для того" и всё после него
-      .replace(/ и (?:затем|потом).*$/i, '') // Удаляем "и затем/потом" и всё после него
-      .replace(/ а (?:затем|потом).*$/i, '') // Удаляем "а затем/потом" и всё после него
-      .trim();
-    
-    // Если после очистки текст стал слишком коротким, возвращаем оригинал
-    if (cleaned.length < 10 && text.length > cleaned.length) {
+  // Функция для обрезки длинных вариантов ответов
+  function truncateOption(text: string, maxLength: number = 100): string {
+    if (text.length <= maxLength) {
       return text;
     }
     
-    return cleaned;
-  }
-  
-  // Функция для обрезки длинных вариантов ответов
-  function truncateOption(text: string, maxLength: number = 100): string {
-    // Сначала очищаем текст от лишних объяснений
-    const cleaned = cleanActionOption(text);
-    
-    if (cleaned.length <= maxLength) {
-      return cleaned;
-    }
-    
     // Обрезаем текст до максимальной длины
-    let truncated = cleaned.substring(0, maxLength - 3) + '...';
+    let truncated = text.substring(0, maxLength - 3) + '...';
     
     // Проверяем, не обрезали ли мы посреди слова
     const lastSpaceIndex = truncated.lastIndexOf(' ');
