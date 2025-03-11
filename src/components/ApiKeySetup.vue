@@ -7,7 +7,7 @@ const apiKey = ref('')
 
 function saveApiKey() {
   if (apiKey.value.trim()) {
-    gameStore.setApiKey(apiKey.value.trim())
+    gameStore.apiKey = apiKey.value.trim()
   }
 }
 </script>

@@ -32,7 +32,7 @@ export const useGameStore = defineStore('game', () => {
   const isGameReady = computed(() => true)
   
   // Действия
-  function startGame(title: string, initialPrompt: string) {
+  function startGame(title: string) {
     gameTitle.value = title
     gameStarted.value = true
     generateScene("Начать игру")

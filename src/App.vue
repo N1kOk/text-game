@@ -8,7 +8,7 @@ const gameStore = useGameStore()
 // Автоматически начать игру при загрузке приложения
 onMounted(() => {
   const gameTitle = 'Волшебное Приключение'
-  gameStore.startGame(gameTitle, '')
+  gameStore.startGame(gameTitle)
 })
 </script>
 
