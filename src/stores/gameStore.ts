@@ -38,7 +38,7 @@ export const useGameStore = defineStore('game', () => {
     generateScene("Начать игру")
   }
   
-  async function generateScene(prompt: string) {
+  async function generateScene(prompt: string, retryCount = 0) {
     if (!apiKey.value) {
       hasError.value = true
       errorMessage.value = 'API ключ не установлен'
@@ -185,12 +185,44 @@ export const useGameStore = defineStore('game', () => {
         currentScene.value = newScene
         history.value.push(newScene)
       }
-    } catch (error) {
+    } catch (error: any) {
+      // Проверяем, является ли ошибка сетевой
+      const isNetworkError = 
+        !error.response || // Нет ответа от сервера
+        error.code === 'ECONNABORTED' || // Таймаут соединения
+        error.message?.includes('Network Error') || // Сообщение об ошибке сети
+        (error.response && (error.response.status === 0 || // Статус 0 обычно означает проблемы с сетью
+                           error.response.status >= 500)); // Серверные ошибки
+      
+      const maxRetries = 3;
+      
+      if (isNetworkError && retryCount < maxRetries) {
+        // Увеличиваем счетчик попыток
+        const nextRetryCount = retryCount + 1;
+        
+        // Устанавливаем сообщение о повторной попытке
+        errorMessage.value = `Ошибка сети. Повторная попытка ${nextRetryCount} из ${maxRetries}...`;
+        
+        // Ждем перед повторной попыткой (экспоненциальная задержка)
+        const delay = 1000
+        
+        setTimeout(() => {
+          // Повторяем запрос
+          generateScene(prompt, nextRetryCount);
+        }, delay);
+        
+        return;
+      }
+      
+      // Если это не сетевая ошибка или превышено количество попыток
       hasError.value = true
       errorMessage.value = error instanceof Error ? error.message : 'Произошла ошибка при генерации сцены'
       console.error('Error generating scene:', error)
     } finally {
-      isLoading.value = false
+      // Убираем индикатор загрузки только если это не повторная попытка
+      if (retryCount === 0 || hasError.value) {
+        isLoading.value = false
+      }
     }
   }
   
